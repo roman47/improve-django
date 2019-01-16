@@ -25,15 +25,15 @@ def item_detail(request, pk):
     return render(request, 'menu/detail_item.html', {'item': item})
 
 def create_new_menu(request):
+    form = forms.MenuForm()
     if request.method == "POST":
         form = forms.MenuForm(request.POST)
         if form.is_valid():
             menu = form.save(commit=False)
-            menu.created_date = timezone.now()
             menu.save()
-            return redirect('menu_detail', pk=menu.pk)
-    else:
-        form = forms.MenuForm()
+            form.save_m2m()
+            return render(request, 'menu/menu_edit.html',
+                          {'form': form})
     return render(request, 'menu/menu_edit.html', {'form': form})
 
 def edit_menu(request, pk):
