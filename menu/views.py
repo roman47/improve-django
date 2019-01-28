@@ -38,7 +38,7 @@ def create_new_menu(request):
 
 def edit_menu(request, pk):
     menu = get_object_or_404(Menu, pk=pk)
-    form = forms.MenuForm(instance=menu)
+    form = forms.MenuForm()
     if request.method == "POST":
         form = forms.MenuForm(instance=menu, data=request.POST)
         if form.is_valid():
